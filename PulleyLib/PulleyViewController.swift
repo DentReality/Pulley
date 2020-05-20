@@ -292,11 +292,16 @@ open class PulleyViewController: UIViewController, PulleyDrawerViewControllerDel
 
     // The visible height of the drawer. Useful for adjusting the display of content in the main content view.
     public var visibleDrawerHeight: CGFloat {
-        if drawerPosition == .closed {
-            return 0.0
-        } else {
-            return drawerScrollView.bounds.height
-        }
+		switch drawerPosition {
+		case .closed:
+			return 0
+		case .collapsed:
+			return collapsedDrawerHeight(bottomSafeArea: pulleySafeAreaInsets.bottom)
+		case .partiallyRevealed:
+			return partialRevealDrawerHeight(bottomSafeArea: pulleySafeAreaInsets.bottom)
+		default:
+			return drawerScrollView.bounds.height
+		}
     }
 
     // Returns default blur style depends on iOS version.
