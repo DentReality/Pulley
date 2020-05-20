@@ -1224,18 +1224,17 @@ open class PulleyViewController: UIViewController, PulleyDrawerViewControllerDel
                 
                 // Move backgroundDimmingView to avoid drawer background being darkened
                 self?.backgroundDimmingView.frame = self?.backgroundDimmingViewFrameForDrawerPosition(stopToMoveTo) ?? CGRect.zero
-                
-                if let drawer = self
-                {
-                    drawer.delegate?.drawerPositionDidChange?(drawer: drawer, bottomSafeArea: self?.pulleySafeAreaInsets.bottom ?? 0.0)
-                    (drawer.drawerContentViewController as? PulleyDrawerViewControllerDelegate)?.drawerPositionDidChange?(drawer: drawer, bottomSafeArea: self?.pulleySafeAreaInsets.bottom ?? 0.0)
-                    (drawer.primaryContentViewController as? PulleyPrimaryContentControllerDelegate)?.drawerPositionDidChange?(drawer: drawer, bottomSafeArea: self?.pulleySafeAreaInsets.bottom ?? 0.0)
-                    
-                    drawer.view.layoutIfNeeded()
-                }
 
                 }, completion: { [weak self] (completed) in
-                    
+					if let drawer = self
+					{
+						drawer.delegate?.drawerPositionDidChange?(drawer: drawer, bottomSafeArea: self?.pulleySafeAreaInsets.bottom ?? 0.0)
+						(drawer.drawerContentViewController as? PulleyDrawerViewControllerDelegate)?.drawerPositionDidChange?(drawer: drawer, bottomSafeArea: self?.pulleySafeAreaInsets.bottom ?? 0.0)
+						(drawer.primaryContentViewController as? PulleyPrimaryContentControllerDelegate)?.drawerPositionDidChange?(drawer: drawer, bottomSafeArea: self?.pulleySafeAreaInsets.bottom ?? 0.0)
+						
+						drawer.view.layoutIfNeeded()
+					}
+					
                     self?.isAnimatingDrawerPosition = false
                     self?.syncDrawerContentViewSizeToMatchScrollPositionForSideDisplayMode()
                     
